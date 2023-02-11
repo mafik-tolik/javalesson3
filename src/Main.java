@@ -2,8 +2,8 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        // ex0(20);
-        // ex1();
+        ex0(20);
+        ex1();
         ex2();
     }
 
