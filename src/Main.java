@@ -2,8 +2,8 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        ex0(20);
-        ex1();
+        // ex0(20);
+        // ex1();
         ex2();
     }
 
@@ -49,10 +49,9 @@ public class Main {
 
     static void ex2() {
 
-
         System.out.print("\nЗадание 3. Реализовать алгоритм сортировки слиянием.\n");
 
-        int[] arr = new int[]{63, 25, 33, 15, 54, 2, 57, 29, 98, 42, 27, 50, 31, 16, 73, 46, 83};
+        int[] arr = new int[] { 63, 25, 33, 15, 54, 2, 57, 29, 98, 42, 27, 50, 31, 16, 73, 46, 83 };
         System.out.println("Заданный массив -> " + Arrays.toString(arr));
 
         sort(arr, 0, arr.length - 1);
@@ -70,28 +69,56 @@ public class Main {
     }
 
     static void merge(int[] ar, int st, int mid, int en) {
-        int[] arNew = new int[en + 1 - st];
-        for (int i = st, j = mid + 1, k = 0; k < arNew.length - 1; k++) {
-            if (ar[i] > ar[j]) {
-                arNew[k] = ar[j];
-                if (j != en) {
+        int size = en - st + 1;
+        int[] arNew = new int[size];
+        for (int i = st, j = mid + 1, k = 0; k < size - 1; k++) {
+            if (i != mid && j != en) {
+                if (ar[i] > ar[j]) {
+                    arNew[k] = ar[j];
                     j++;
+                } else {
+                    arNew[k] = ar[i];
+                    i++;
+                }
+            } else if (i == mid && j != en) {
+                if (ar[i] > ar[j]) {
+                    arNew[k] = ar[j];
+                    j++;
+                } else {
+                    arNew[k] = ar[i];
+                    while (j != en + 1) {
+                        k++;
+                        arNew[k] = ar[j];
+                        j++;
+                    }
+                    continue;
+                }
+            } else if (i != mid && j == en) {
+                if (ar[i] < ar[j]) {
+                    arNew[k] = ar[i];
+                    i++;
+                } else {
+                    arNew[k] = ar[j];
+                    while (i != mid + 1) {
+                        k++;
+                        arNew[k] = ar[i];
+                        i++;
+                    }
+                    continue;
                 }
             } else {
-                arNew[k] = ar[i];
-                if (i != mid) {
-                    i++;
+                if (ar[i] > ar[j]) {
+                    arNew[k] = ar[j];
+                    arNew[k + 1] = ar[i];
+                    continue;
+                } else {
+                    arNew[k] = ar[i];
+                    arNew[k + 1] = ar[j];
+                    continue;
                 }
             }
         }
-
-        if (ar[mid] > ar[en]) {
-            arNew[arNew.length - 1] = ar[mid];
-        } else {
-            arNew[arNew.length - 1] = ar[en];
-        }
-
-        for (int l = 0, m = st; l < arNew.length; l++, m++) {
+        for (int l = 0, m = st; l < size; l++, m++) {
             ar[m] = arNew[l];
         }
     }
